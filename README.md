@@ -11,7 +11,9 @@
 > An instant, AI-powered code review tool built with **Gemini 2.5 Flash (Free Tier)**. Paste any code, get senior-developer-level feedback in seconds — streamed in real-time.
 
 <p align="center">
-  <strong>🔗 Live Demo:</strong> <a href="https://code-review-omega-five.vercel.app/">ai-powered-code-reviewer-xi.vercel.app</a>
+  <strong>🔗 Live Demo:</strong> <a href="https://code-review-omega-five.vercel.app/">code-review-omega-five.vercel.app</a>
+  &nbsp;&nbsp;·&nbsp;&nbsp;
+  <strong>🔗 GitHub Repository:</strong> <a href="https://github.com/sangeetasonal/code-review">github.com/sangeetasonal/code-review</a>
 </p>
 
 ---
@@ -99,7 +101,7 @@
 
 ```bash
 git clone https://github.com/sangeetasonal/code-review.git
-cd ai-powered-code-reviewer
+cd code-review
 
 # Install root + backend dependencies
 npm install
