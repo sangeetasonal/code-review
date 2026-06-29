@@ -91,7 +91,7 @@ export default function App() {
   const [review, setReview]         = useState("");
   const [streaming, setStreaming]   = useState(false);
   const [error, setError]           = useState("");
-  const [sidebarOpen, setSidebarOpen]       = useState(true);
+  const [sidebarOpen, setSidebarOpen]       = useState(false);
   const [shortcutsOpen, setShortcutsOpen]   = useState(false);
   const [history, setHistory]               = useState(loadHistory);
   const [activeHistoryId, setActiveHistoryId] = useState(null);
