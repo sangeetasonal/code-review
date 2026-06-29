@@ -11,7 +11,7 @@
 > An instant, AI-powered code review tool built with **Gemini 2.5 Flash (Free Tier)**. Paste any code, get senior-developer-level feedback in seconds — streamed in real-time.
 
 <p align="center">
-  <strong>🔗 Live Demo:</strong> <a href="https://ai-powered-code-reviewer-xi.vercel.app">ai-powered-code-reviewer-xi.vercel.app</a>
+  <strong>🔗 Live Demo:</strong> <a href="https://code-review-omega-five.vercel.app/">ai-powered-code-reviewer-xi.vercel.app</a>
 </p>
 
 ---
