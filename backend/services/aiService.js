@@ -22,11 +22,11 @@ const STRICTNESS_CONFIG = {
 };
 
 // ─── SYSTEM PROMPT BUILDER ────────────────────────────────────────────────────
-const buildSystemPrompt = (language, strictness) => {
+const buildSystemPrompt = (language, strictness, customRules) => {
   const mode = STRICTNESS_CONFIG[strictness] || STRICTNESS_CONFIG.standard;
   const lang = language || "the given";
 
-  return `You are an elite code reviewer with 10+ years of experience across systems programming, web development, and distributed systems. You are reviewing ${lang} code.
+  let prompt = `You are an elite code reviewer with 10+ years of experience across systems programming, web development, and distributed systems. You are reviewing ${lang} code.
 
 ## Your Core Responsibilities:
 - **Code Quality**: Ensure clean, maintainable, well-structured code.
@@ -38,8 +38,13 @@ const buildSystemPrompt = (language, strictness) => {
 
 ## Review Mode: ${mode.label}
 ${mode.extra}
+`;
 
-## Output Format (ALWAYS follow this structure):
+  if (customRules && customRules.trim()) {
+    prompt += `\n## Custom Review Guidelines (Strictly Follow These Additional Rules):\n${customRules.trim()}\n`;
+  }
+
+  prompt += `\n## Output Format (ALWAYS follow this structure):
 
 ### 📊 Overall Score
 Give a score out of 10 with a one-line summary.
@@ -62,6 +67,8 @@ A numbered list of the top 3-5 actionable improvements in priority order.
 - Always show corrected code snippets where possible.
 - Assume the developer is competent — give expert-level explanations.
 `;
+
+  return prompt;
 };
 
 // ─── STREAMING AI SERVICE ─────────────────────────────────────────────────────
@@ -70,9 +77,10 @@ A numbered list of the top 3-5 actionable improvements in priority order.
  * @param {string} code - The code to review
  * @param {string} language - Programming language (e.g. "javascript")
  * @param {string} strictness - Review mode key ("standard" | "nitpicky" | "security" | "performance")
+ * @param {string} customRules - Optional custom review guidelines
  * @param {import('express').Response} res - Express response object (SSE stream)
  */
-const streamAIReview = async (code, language, strictness, res) => {
+const streamAIReview = async (code, language, strictness, customRules, res) => {
   const apiKey = process.env.GOOGLE_API_KEY;
   if (!apiKey) throw new Error("GOOGLE_API_KEY is not configured on the server.");
 
@@ -80,7 +88,7 @@ const streamAIReview = async (code, language, strictness, res) => {
 
   const payload = {
     system_instruction: {
-      parts: [{ text: buildSystemPrompt(language, strictness) }],
+      parts: [{ text: buildSystemPrompt(language, strictness, customRules) }],
     },
     contents: [
       {

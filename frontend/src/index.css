@@ -20,15 +20,61 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* ─── Cyber-Glow Space Backdrops ────────────────────────────────────────────── */
+.cyber-bg {
+  position: relative;
+}
+.dark .cyber-bg::before {
+  content: "";
+  position: absolute;
+  top: -15%;
+  right: -10%;
+  width: 55%;
+  height: 55%;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.07) 0%, transparent 75%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+
+/* ─── Glassmorphism Panels ─────────────────────────────────────────────────── */
+.glass-panel {
+  backdrop-filter: blur(14px);
+}
+.dark .glass-panel {
+  background: rgba(10, 8, 24, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+.light .glass-panel {
+  background: rgba(255, 255, 255, 0.75);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* ─── Neon Border Focus Glows ──────────────────────────────────────────────── */
+.editor-glow {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+.dark .editor-glow:focus-within {
+  border-color: rgba(139, 92, 246, 0.5);
+  box-shadow: 0 0 15px rgba(139, 92, 246, 0.15);
+}
+.light .editor-glow:focus-within {
+  border-color: rgba(139, 92, 246, 0.3);
+  box-shadow: 0 0 12px rgba(139, 92, 246, 0.08);
+}
+
 /* ─── Custom scrollbar ─────────────────────────────────────────────────────── */
 ::-webkit-scrollbar { width: 5px; height: 5px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 99px; }
-::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.15); }
+.dark ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.04); border-radius: 99px; }
+.dark ::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.1); }
+.light ::-webkit-scrollbar-thumb { background: rgba(0, 0, 0, 0.08); border-radius: 99px; }
+.light ::-webkit-scrollbar-thumb:hover { background: rgba(0, 0, 0, 0.15); }
 
 /* ─── Dark mode dropdown fix ──────────────────────────────────────────────── */
 .dark select option {
-  background: #1e1e2e;
+  background: #0d0a1d;
   color: #e4e4e7;
 }
 
@@ -39,7 +85,7 @@ body {
 }
 
 @keyframes scaleIn {
-  from { opacity: 0; transform: scale(0.95); }
+  from { opacity: 0; transform: scale(0.96); }
   to   { opacity: 1; transform: scale(1); }
 }
 
@@ -54,7 +100,7 @@ body {
 
 @keyframes float {
   0%, 100% { transform: translateY(0); }
-  50%      { transform: translateY(-6px); }
+  50%      { transform: translateY(-5px); }
 }
 
 @keyframes shimmer {
@@ -62,29 +108,70 @@ body {
   100% { background-position: 200% 0; }
 }
 
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.15; }
+  50% { opacity: 0.35; }
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 2.5s infinite ease-in-out;
+}
+
 /* ─── Markdown review content ──────────────────────────────────────────────── */
 .review-md h1, .review-md h2, .review-md h3 {
-  @apply font-bold text-gray-100 mt-5 mb-2;
+  @apply font-bold mt-5 mb-2 transition-colors;
 }
-.review-md h1 { @apply text-lg border-b border-white/[0.06] pb-2; }
+.dark .review-md h1, .dark .review-md h2, .dark .review-md h3 { @apply text-gray-100; }
+.light .review-md h1, .light .review-md h2, .light .review-md h3 { @apply text-gray-800; }
+
+.review-md h1 { @apply text-lg border-b border-black/[0.04] dark:border-white/[0.06] pb-2; }
 .review-md h2 { @apply text-base; }
 .review-md h3 { @apply text-sm; }
-.review-md p  { @apply text-sm text-gray-400 mb-3 leading-relaxed; }
-.review-md ul, .review-md ol { @apply pl-5 mb-3 text-sm text-gray-400; }
+
+.review-md p { @apply text-sm mb-3 leading-relaxed transition-colors; }
+.dark .review-md p { @apply text-gray-400; }
+.light .review-md p { @apply text-gray-600; }
+
+.review-md ul, .review-md ol { @apply pl-5 mb-3 text-sm transition-colors; }
+.dark .review-md ul, .dark .review-md ol { @apply text-gray-400; }
+.light .review-md ul, .light .review-md ol { @apply text-gray-600; }
 .review-md li { @apply mb-1; }
-.review-md strong { @apply text-gray-200 font-semibold; }
+
+.review-md strong { @apply font-semibold; }
+.dark .review-md strong { @apply text-gray-200; }
+.light .review-md strong { @apply text-gray-800; }
+
 .review-md blockquote {
-  @apply border-l-2 border-violet-500 pl-3 text-gray-500 italic my-3;
+  @apply border-l-2 border-violet-500 pl-3 italic my-3 transition-colors;
 }
+.dark .review-md blockquote { @apply text-gray-500; }
+.light .review-md blockquote { @apply text-gray-400; }
+
 .review-md code {
-  @apply font-mono text-xs bg-white/[0.06] px-1.5 py-0.5 rounded text-violet-300 border border-white/[0.04];
+  @apply font-mono text-xs px-1.5 py-0.5 rounded transition-colors;
 }
+.dark .review-md code {
+  @apply bg-white/[0.04] text-violet-300 border border-white/[0.03];
+}
+.light .review-md code {
+  @apply bg-black/[0.03] text-violet-600 border border-black/[0.04];
+}
+
 .review-md pre {
-  @apply bg-slate-800/60 border border-white/[0.06] rounded-lg p-3.5 overflow-x-auto my-3;
+  @apply border rounded-xl p-3.5 overflow-x-auto my-3 transition-all duration-300 shadow-sm;
 }
+.dark .review-md pre {
+  @apply bg-[#0c0a1a]/60 border-white/[0.04];
+}
+.light .review-md pre {
+  @apply bg-gray-50 border-black/[0.05];
+}
+
 .review-md pre code {
-  @apply bg-transparent border-none p-0 text-gray-300 text-xs;
+  @apply bg-transparent border-none p-0 text-xs;
 }
+.dark .review-md pre code { @apply text-gray-300; }
+.light .review-md pre code { @apply text-gray-700; }
 
 /* Skeleton shimmer */
 .skeleton-line {
@@ -93,3 +180,69 @@ body {
   animation: shimmer 1.5s ease-in-out infinite;
   border-radius: 6px;
 }
+.light .skeleton-line {
+  background: linear-gradient(90deg, rgba(0,0,0,0.03) 25%, rgba(0,0,0,0.06) 50%, rgba(0,0,0,0.03) 75%);
+  background-size: 200% 100%;
+}
+
+/* ─── Premium Sidebar Activity Bar & Content Panel ───────────────────────── */
+.activity-bar {
+  background: rgba(10, 8, 24, 0.7);
+  border-right: 1px solid rgba(255, 255, 255, 0.04);
+}
+.light .activity-bar {
+  background: rgba(245, 245, 247, 0.85);
+  border-right: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.sidebar-content-panel {
+  background: rgba(8, 6, 20, 0.5);
+  border-right: 1px solid rgba(255, 255, 255, 0.04);
+}
+.light .sidebar-content-panel {
+  background: rgba(255, 255, 255, 0.65);
+  border-right: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* Tab Active indicator glow */
+.tab-glow {
+  position: relative;
+}
+.tab-glow::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 18px;
+  background: #8b5cf6;
+  border-radius: 0 4px 4px 0;
+  box-shadow: 0 0 10px #a855f7;
+}
+
+/* File explorer list card and hover animations */
+.file-card {
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.file-card:hover {
+  background: rgba(139, 92, 246, 0.05);
+  border-color: rgba(139, 92, 246, 0.2);
+}
+.dark .file-card-active {
+  background: rgba(139, 92, 246, 0.1);
+  border-color: rgba(139, 92, 246, 0.4);
+  box-shadow: 0 0 15px rgba(139, 92, 246, 0.08);
+}
+.light .file-card-active {
+  background: rgba(139, 92, 246, 0.06);
+  border-color: rgba(139, 92, 246, 0.3);
+  box-shadow: 0 0 12px rgba(139, 92, 246, 0.04);
+}
+
+/* Guidelines Textarea container styling */
+.guidelines-textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+

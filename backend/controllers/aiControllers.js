@@ -14,7 +14,7 @@ const ALLOWED_STRICTNESS = new Set(["standard", "nitpicky", "security", "perform
 
 // ─── CONTROLLER ───────────────────────────────────────────────────────────────
 const getReview = async (req, res) => {
-  const { code, language = "plaintext", strictness = "standard" } = req.body;
+  const { code, language = "plaintext", strictness = "standard", customRules = "" } = req.body;
 
   // Input validation
   if (!code || typeof code !== "string") {
@@ -44,8 +44,14 @@ const getReview = async (req, res) => {
     });
   }
 
+  if (customRules && typeof customRules !== "string") {
+    return res.status(400).json({
+      error: "customRules must be a string.",
+    });
+  }
+
   try {
-    await streamAIReview(trimmedCode, language, strictness, res);
+    await streamAIReview(trimmedCode, language, strictness, customRules, res);
   } catch (err) {
     console.error("❌ Review stream error:", err.message);
     // Only send error if headers haven't been sent yet
@@ -54,5 +60,4 @@ const getReview = async (req, res) => {
     }
   }
 };
-
 export { getReview };
