@@ -51,21 +51,8 @@ const MODES = [
   { value: "performance", label: "Performance" },
 ];
 
-const DEFAULT_CODE = `// Paste your code here, then hit Ctrl+Enter or click "Review"
-function fetchUserData(userId) {
-  let data = fetch('/api/users/' + userId).then(r => r.json());
-  return data;
-}
-
-function processUsers(users) {
-  var result = [];
-  for (var i = 0; i < users.length; i++) {
-    if (users[i].age > 18) {
-      result.push(users[i]);
-    }
-  }
-  return result;
-}`;
+const DEFAULT_CODE = `// Paste your code here to start reviewing...
+`;
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
 const loadHistory = () => {
